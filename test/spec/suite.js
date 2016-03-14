@@ -71,7 +71,6 @@ module.exports = function(test, Promise) {
             return redis.infoAsync()
         })
         .then(function(info) {
-
             test.ok(info, 'Able to run #info command on Redis DB');
         })
         .catch(function(err) {
