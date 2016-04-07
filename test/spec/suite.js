@@ -1,9 +1,8 @@
 "use strict";
 
-var util = require('util');
-var path = require('path');
-var _ = require('lodash');
-var inst = require('../../lib');
+let util = require('util');
+let _ = require('lodash');
+let inst = require('../../lib');
 
 // Adds tests to sent promise that attempt to initialize module with
 // invalid schema values, adding proper handlers, etc.
@@ -14,7 +13,7 @@ var inst = require('../../lib');
 //
 function addSchemaTests(prom, test) {
 
-    var schemaOpts = {
+    let schemaOpts = {
 
         'host' : '0.0.0.0.0', // invalid ip
         'port' : 1000000, // out of range integer
@@ -26,9 +25,7 @@ function addSchemaTests(prom, test) {
         'socket_keepalive' : 123, // should be boolean
         'no_ready_check' : 123, // should be boolean
         'enable_offline_queue' : 123, // should be boolean
-        'retry_max_delay' : 'abc', // should be integer
         'connect_timeout' : 'abc', // should be integer
-        'max_attempts' : 'abc', // should be integer
         'retry_unfulfilled_commands' : 123, // should be boolean
         'password' : 123, // should be a string
         'family' : 123, // should be a string
@@ -43,15 +40,15 @@ function addSchemaTests(prom, test) {
     Object.keys(schemaOpts).forEach(function(key) {
 
         prom
-            .then(function() {
-                var obj = {};
+            .then(() => {
+                let obj = {};
                 obj[key] = schemaOpts[key];
                 return Promise.resolve(inst(obj));
             })
-            .then(function() {
+            .then(() => {
                 test.fail('Did not throw with invalid schema value for #' + key);
             })
-            .catch(function() {
+            .catch(() => {
                 test.pass('Correctly caught invalid schema value for #' + key);
             })
     });
@@ -62,21 +59,13 @@ function addSchemaTests(prom, test) {
 
 module.exports = function(test, Promise) {
 
-    var redis = inst({
+    let redis = inst({
         host: 'localhost'
     });
 
     return addSchemaTests(Promise.resolve(), test)
-        .then(function() {
-            return redis.infoAsync()
-        })
-        .then(function(info) {
-            test.ok(info, 'Able to run #info command on Redis DB');
-        })
-        .catch(function(err) {
-            test.fail('General testing error: ' + err);
-        })
-        .finally(function() {
-            redis.quit();
-        });
+        .then(() => redis.infoAsync())
+        .then(info => test.ok(info, 'Able to run #info command on Redis DB'))
+        .catch(err => test.fail('General testing error: ' + err))
+        .finally(() => redis.quit());
 };
