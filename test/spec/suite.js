@@ -19,7 +19,7 @@ function addSchemaTests(prom, test) {
         'port' : 1000000, // out of range integer
         'path' : 123, // should be a string
         'url' : 123, // should be string
-        'parser' : 123, // should be string
+        'string_numbers' : 123, // should be boolean
         'return_buffers' : 123, // should be boolean
         'detect_buffers' : 123, // should be boolean
         'socket_keepalive' : 123, // should be boolean
