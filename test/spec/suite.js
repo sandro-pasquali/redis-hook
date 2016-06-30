@@ -32,9 +32,7 @@ function addSchemaTests(prom, test) {
         'disable_resubscribing' : 123, // should be boolean
         'rename_commands' : 123, // should be object
         'tls' : 123, // should be object
-        'prefix' : 123, // should be string
-
-        'promisify' : 123 // should be boolean
+        'prefix' : 123 // should be string
     };
 
     Object.keys(schemaOpts).forEach(function(key) {
